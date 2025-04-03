@@ -1,25 +1,21 @@
-// Smooth scrolling for nav links
 document.querySelectorAll('a.nav-link').forEach(link => {
-    link.addEventListener('click', function(e) {
+    link.addEventListener('click', function (e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
-        target.scrollIntoView({ behavior: 'smooth' });
+        target.scrollIntoView({
+            behavior: 'smooth'
+        });
     });
 });
-
-// Carousel functionality (if you have one)
 let carouselItems = document.querySelectorAll('.carousel-item');
-if (carouselItems.length > 0) {
-    let currentIndex = 0;
-    setInterval(() => {
-        carouselItems[currentIndex].classList.remove('active');
-        currentIndex = (currentIndex + 1) % carouselItems.length;
-        carouselItems[currentIndex].classList.add('active');
-    }, 3000);
-}
+let currentIndex = 0;
 
-// Sticky navbar
-window.addEventListener('scroll', function() {
+setInterval(() => {
+    carouselItems[currentIndex].classList.remove('active');
+    currentIndex = (currentIndex + 1) % carouselItems.length;
+    carouselItems[currentIndex].classList.add('active');
+}, 3000); // Rotate every 3 seconds
+window.addEventListener('scroll', function () {
     const navbar = document.querySelector('.navbar');
     if (window.scrollY > 50) {
         navbar.classList.add('fixed-top', 'shadow');
@@ -27,19 +23,45 @@ window.addEventListener('scroll', function() {
         navbar.classList.remove('fixed-top', 'shadow');
     }
 });
+document.querySelector('form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const name = document.querySelector('input[type="text"]');
+    const email = document.querySelector('input[type="email"]');
+    const message = document.querySelector('textarea');
 
-// Active section highlighting
+    if (name.value === '') {
+        alert('Please enter your name.');
+        name.focus();
+        return;
+    }
+
+    if (!email.value.includes('@')) {
+        alert('Please enter a valid email.');
+        email.focus();
+        return;
+    }
+
+    if (message.value === '') {
+        alert('Please write a message.');
+        message.focus();
+        return;
+    }
+
+    alert('Form submitted successfully!');
+});
 const sections = document.querySelectorAll('section');
 const navLinks = document.querySelectorAll('.nav-link');
 
 window.addEventListener('scroll', () => {
     let currentSection = '';
+
     sections.forEach(section => {
         const sectionTop = section.offsetTop - 100;
         if (window.scrollY >= sectionTop) {
             currentSection = section.getAttribute('id');
         }
     });
+
     navLinks.forEach(link => {
         link.classList.remove('active');
         if (link.getAttribute('href').includes(currentSection)) {
@@ -47,19 +69,13 @@ window.addEventListener('scroll', () => {
         }
     });
 });
-
-// Mobile menu toggle
 const toggleButton = document.querySelector('.navbar-toggler');
 const navbarLinks = document.querySelector('.navbar-collapse');
 
-if (toggleButton && navbarLinks) {
-    toggleButton.addEventListener('click', () => {
-        const isVisible = navbarLinks.style.display === 'block';
-        navbarLinks.style.display = isVisible ? 'none' : 'block';
-    });
-}
-
-// Service modals - SINGLE VERSION (remove the duplicate)
+toggleButton.addEventListener('click', () => {
+    navbarLinks.style.display = (navbarLinks.style.display === 'block') ? 'none' : 'block';
+});
+// JavaScript for "Learn More" modals
 const services = [
     {
         id: 'crop-advisory-btn',
@@ -95,115 +111,49 @@ const services = [
 
 services.forEach(service => {
     const button = document.getElementById(service.id);
-    if (button) {
-        button.addEventListener('click', () => {
-            const modal = document.createElement('div');
-            modal.style.position = 'fixed';
-            modal.style.top = '0';
-            modal.style.left = '0';
-            modal.style.width = '100%';
-            modal.style.height = '100%';
-            modal.style.backgroundColor = 'rgba(0,0,0,0.5)';
-            modal.style.display = 'flex';
-            modal.style.justifyContent = 'center';
-            modal.style.alignItems = 'center';
-            modal.style.zIndex = '1000';
-            
-            modal.innerHTML = `
-                <div style="background: white; padding: 20px; border-radius: 8px; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto;">
-                    <h2 style="color: #28a745;">${service.title}</h2>
-                    <div style="text-align: left;">${service.details}</div>
-                    <button class="btn btn-danger mt-3" style="background: #dc3545;">Close</button>
+
+    button.addEventListener('click', () => {
+        const modal = document.createElement('div');
+        modal.innerHTML = `
+            <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); display: flex; justify-content: center; align-items: center;">
+                <div style="background: white; padding: 20px; border-radius: 5px; text-align: left; max-width: 500px;">
+                    <h2>${service.title}</h2>
+                    ${service.details}
+                    <button id="close-modal" class="btn btn-danger mt-3">Close</button>
                 </div>
-            `;
-            
-            document.body.appendChild(modal);
-            document.body.style.overflow = 'hidden'; // Prevent scrolling
-            
-            // Close modal
-            modal.querySelector('button').addEventListener('click', () => {
-                document.body.removeChild(modal);
-                document.body.style.overflow = 'auto';
-            });
+            </div>
+        `;
+        document.body.appendChild(modal);
+
+        // Close modal logic
+        const closeModal = document.getElementById('close-modal');
+        closeModal.addEventListener('click', () => {
+            modal.remove();
         });
-    }
+    });
 });
 
-// Contact form submission - SINGLE HANDLER
-const contactForm = document.getElementById('contactForm');
-if (contactForm) {
-    contactForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        const submitBtn = e.target.querySelector('button[type="submit"]');
-        const originalBtnText = submitBtn.innerHTML;
-        
-        try {
-            // Show loading state
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Sending...';
-            
-            const formData = {
-                name: document.getElementById('name').value.trim(),
-                email: document.getElementById('email').value.trim(),
-                message: document.getElementById('message').value.trim()
-            };
-            
-            // Client-side validation
-            if (!formData.name || !formData.email || !formData.message) {
-                throw new Error('Please fill in all fields');
-            }
-            
-            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-                throw new Error('Please enter a valid email address');
-            }
-            
-            const response = await fetch('/api/contact', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData)
-            });
-            
-            const data = await response.json();
-            
-            if (!response.ok) {
-                throw new Error(data.message || 'Failed to send message');
-            }
-            
-            // Show success message
-            const successAlert = document.createElement('div');
-            successAlert.className = 'alert alert-success position-fixed top-0 start-50 translate-middle-x mt-3';
-            successAlert.style.zIndex = '1100';
-            successAlert.textContent = data.message || 'Thank you! Your message has been sent.';
-            document.body.appendChild(successAlert);
-            
-            // Remove alert after 5 seconds
-            setTimeout(() => {
-                document.body.removeChild(successAlert);
-            }, 5000);
-            
-            // Reset form
-            e.target.reset();
-            
-        } catch (error) {
-            console.error('Error:', error);
-            const errorAlert = document.createElement('div');
-            errorAlert.className = 'alert alert-danger position-fixed top-0 start-50 translate-middle-x mt-3';
-            errorAlert.style.zIndex = '1100';
-            errorAlert.textContent = error.message || 'Something went wrong. Please try again later.';
-            document.body.appendChild(errorAlert);
-            
-            // Remove alert after 5 seconds
-            setTimeout(() => {
-                document.body.removeChild(errorAlert);
-            }, 5000);
-            
-        } finally {
-            // Reset button state
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = originalBtnText;
-        }
+services.forEach(service => {
+    const button = document.getElementById(service.id);
+
+    button.addEventListener('click', () => {
+        const modal = document.createElement('div');
+        modal.innerHTML = `
+            <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); display: flex; justify-content: center; align-items: center;">
+                <div style="background: white; padding: 20px; border-radius: 5px; text-align: center; max-width: 500px;">
+                    <h2>${service.title}</h2>
+                    <p>${service.details}</p>
+                    <button id="close-modal" class="btn btn-danger mt-3">Close</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+
+        // Close modal logic
+        const closeModal = document.getElementById('close-modal');
+        closeModal.addEventListener('click', () => {
+            modal.remove();
+        });
     });
-}
+});
+
