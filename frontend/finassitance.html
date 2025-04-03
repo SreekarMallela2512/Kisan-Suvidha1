@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Krishi Sahay - Farmer Financial Assistance</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --loan: #2196F3;      /* Blue */
+            --subsidy: #4CAF50;   /* Green */
+            --scheme: #FF9800;     /* Orange */
+            --insurance: #9C27B0;  /* Purple */
+            --literacy: #607D8B;   /* Teal */
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            line-height: 1.6;
+        }
+        header {
+            background: linear-gradient(135deg, #2E7D32, #4CAF50);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .card h2 {
+            margin-top: 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid;
+        }
+        .loan { border-color: var(--loan); color: var(--loan); }
+        .subsidy { border-color: var(--subsidy); color: var(--subsidy); }
+        .scheme { border-color: var(--scheme); color: var(--scheme); }
+        .insurance { border-color: var(--insurance); color: var(--insurance); }
+        .literacy { border-color: var(--literacy); color: var(--literacy); }
+        .tag {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .chart-container {
+            height: 200px;
+            margin: 1.5rem 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        th, td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .btn {
+            display: inline-block;
+            padding: 0.6rem 1.2rem;
+            background: #4CAF50;
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+            margin-top: 0.5rem;
+            font-weight: 500;
+        }
+        .search-bar {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>💰 Krishi Sahay</h1>
+        <p>Financial assistance for Indian farmers</p>
+    </header>
+
+    <div class="container">
+        <input type="text" class="search-bar" placeholder="Search (e.g. PM-KISAN, KCC Loan...)">
+
+        <div class="dashboard">
+            <!-- Agricultural Loans -->
+            <div class="card loan">
+                <h2>🏦 Agricultural Loans</h2>
+                <div class="chart-container">
+                    <canvas id="loanChart"></canvas>
+                </div>
+                <table>
+                    <tr>
+                        <th>Scheme</th>
+                        <th>Details</th>
+                    </tr>
+                    <tr>
+                        <td>KCC (Kisan Credit Card)</td>
+                        <td>Up to ₹3 lakh @ 4% interest</td>
+                    </tr>
+                    <tr>
+                        <td>Term Loans</td>
+                        <td>For equipment (up to ₹10 lakh)</td>
+                    </tr>
+                </table>
+                <a href="#" class="btn">Apply Online</a>
+            </div>
+
+            <!-- Subsidies -->
+            <div class="card subsidy">
+                <h2>🌱 Subsidies</h2>
+                <div class="chart-container">
+                    <canvas id="subsidyChart"></canvas>
+                </div>
+                <p><strong>Available:</strong></p>
+                <span class="tag" style="background:#E8F5E9;color:#2E7D32">Seeds: 50%</span>
+                <span class="tag" style="background:#E8F5E9;color:#2E7D32">Fertilizer: ₹500/bag</span>
+                <span class="tag" style="background:#E8F5E9;color:#2E7D32">Drip Irrigation: 75%</span>
+                <p style="margin-top:1rem"><strong>PM-KISAN:</strong> ₹6,000/year direct benefit</p>
+                <a href="#" class="btn">Check Eligibility</a>
+            </div>
+
+            <!-- Government Schemes -->
+            <div class="card scheme">
+                <h2>🏛️ Government Schemes</h2>
+                <table>
+                    <tr>
+                        <th>Scheme</th>
+                        <th>Benefit</th>
+                    </tr>
+                    <tr>
+                        <td>PM Fasal Bima Yojana</td>
+                        <td>Crop insurance @ 2% premium</td>
+                    </tr>
+                    <tr>
+                        <td>Soil Health Card</td>
+                        <td>Free soil testing</td>
+                    </tr>
+                    <tr>
+                        <td>e-NAM</td>
+                        <td>Online mandi access</td>
+                    </tr>
+                </table>
+                <div class="chart-container">
+                    <canvas id="schemeChart"></canvas>
+                </div>
+                <a href="#" class="btn">View All Schemes</a>
+            </div>
+
+            <!-- Crop Insurance -->
+            <div class="card insurance">
+                <h2>🛡️ Crop Insurance</h2>
+                <p><strong>PM Fasal Bima Yojana:</strong></p>
+                <ul>
+                    <li>Premium: 2% (Kharif), 1.5% (Rabi)</li>
+                    <li>Covers weather, pest damage</li>
+                    <li>Claim within 45 days of harvest</li>
+                </ul>
+                <div class="chart-container">
+                    <canvas id="insuranceChart"></canvas>
+                </div>
+                <a href="#" class="btn">Calculate Premium</a>
+            </div>
+
+            <!-- Financial Literacy -->
+            <div class="card literacy">
+                <h2>📚 Financial Literacy</h2>
+                <p><strong>Free Resources:</strong></p>
+                <span class="tag" style="background:#ECEFF1;color:#607D8B">Budgeting</span>
+                <span class="tag" style="background:#ECEFF1;color:#607D8B">Loan Management</span>
+                <span class="tag" style="background:#ECEFF1;color:#607D8B">Market Trends</span>
+                <div class="chart-container">
+                    <canvas id="literacyChart"></canvas>
+                </div>
+                <p><strong>Toll-free:</strong> Kisan Call Center ☎ 1800-180-1551</p>
+                <a href="#" class="btn">Download Guides</a>
+            </div>
+
+            <!-- Eligibility Calculator -->
+            <div class="card">
+                <h2>🧮 Scheme Eligibility</h2>
+                <table>
+                    <tr>
+                        <td>Landholding (acres):</td>
+                        <td><input type="number" value="2" style="padding:0.3rem;width:100%"></td>
+                    </tr>
+                    <tr>
+                        <td>Annual Income:</td>
+                        <td>
+                            <select style="padding:0.3rem;width:100%">
+                                <option>< ₹1.5 lakh</option>
+                                <option>₹1.5-3 lakh</option>
+                                <option>> ₹3 lakh</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Eligible For:</strong></td>
+                        <td>PM-KISAN, KCC, Subsidies</td>
+                    </tr>
+                </table>
+                <a href="#" class="btn">Check Now</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Loan Chart
+        new Chart(document.getElementById('loanChart'), {
+            type: 'bar',
+            data: {
+                labels: ['KCC', 'Term Loan', 'Micro Credit'],
+                datasets: [{
+                    label: 'Interest Rate %',
+                    data: [4, 8.5, 12],
+                    backgroundColor: '#2196F3'
+                }]
+            }
+        });
+
+        // Subsidy Chart
+        new Chart(document.getElementById('subsidyChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Fertilizer', 'Seeds', 'Equipment'],
+                datasets: [{
+                    data: [40, 35, 25],
+                    backgroundColor: ['#4CAF50', '#8BC34A', '#C8E6C9']
+                }]
+            }
+        });
+
+        // Scheme Chart
+        new Chart(document.getElementById('schemeChart'), {
+            type: 'line',
+            data: {
+                labels: ['2018', '2019', '2020', '2021', '2022', '2023'],
+                datasets: [{
+                    label: 'Farmers Enrolled (lakhs)',
+                    data: [45, 52, 58, 65, 72, 80],
+                    borderColor: '#FF9800',
+                    tension: 0.3
+                }]
+            }
+        });
+
+        // Insurance Chart
+        new Chart(document.getElementById('insuranceChart'), {
+            type: 'pie',
+            data: {
+                labels: ['Kharif', 'Rabi', 'Horticulture'],
+                datasets: [{
+                    data: [55, 35, 10],
+                    backgroundColor: ['#9C27B0', '#BA68C8', '#E1BEE7']
+                }]
+            }
+        });
+
+        // Literacy Chart
+        new Chart(document.getElementById('literacyChart'), {
+            type: 'radar',
+            data: {
+                labels: ['Budgeting', 'Loans', 'Insurance', 'Investing', 'Saving'],
+                datasets: [{
+                    label: 'Knowledge Level',
+                    data: [65, 40, 30, 25, 50],
+                    backgroundColor: 'rgba(96, 125, 139, 0.2)'
+                }]
+            }
+        });
+    </script>
+</body>
+</html>

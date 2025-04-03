@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprehensive Crop Advisory</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #4CAF50;
+            --secondary: #8BC34A;
+            --dark: #2E7D32;
+            --light: #F1F8E9;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+        }
+        body {
+            background: #f9f9f9;
+            color: #333;
+            padding-bottom: 2rem;
+        }
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+        .card h2 {
+            color: var(--dark);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 0.5rem;
+        }
+        .chart-container {
+            height: 200px;
+            margin: 1.5rem 0;
+        }
+        .theory {
+            margin: 1rem 0;
+            font-size: 0.95rem;
+        }
+        .tips-list {
+            margin: 0.5rem 0;
+            padding-left: 1.2rem;
+        }
+        .tips-list li {
+            margin-bottom: 0.5rem;
+        }
+        .highlight {
+            background: #E8F5E9;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🌱 Comprehensive Crop Advisory</h1>
+        <p>Science-based farming guidance</p>
+    </header>
+
+    <div class="container">
+        <div class="dashboard">
+            <!-- Crop Selection -->
+            <div class="card">
+                <h2>Crop Selection Guide</h2>
+                <div class="theory">
+                    <p>Choosing the right crop depends on <span class="highlight">soil type</span>, <span class="highlight">climate</span>, and <span class="highlight">market demand</span>. Key factors:</p>
+                    <ul class="tips-list">
+                        <li><strong>Clay soil:</strong> Wheat, barley (retains moisture)</li>
+                        <li><strong>Sandy soil:</strong> Peanuts, carrots (good drainage)</li>
+                        <li><strong>pH 6-7:</strong> Most vegetables thrive</li>
+                    </ul>
+                </div>
+                <div class="chart-container">
+                    <canvas id="cropChart"></canvas>
+                </div>
+                <p class="theory"><strong>Rotation Tip:</strong> Alternate legumes (soybean) with cereals (wheat) to restore nitrogen.</p>
+            </div>
+
+            <!-- Soil Health -->
+            <div class="card">
+                <h2>Soil Health Management</h2>
+                <div class="theory">
+                    <p>Healthy soil contains:</p>
+                    <ul class="tips-list">
+                        <li><strong>45% minerals</strong> (sand, silt, clay)</li>
+                        <li><strong>5% organic matter</strong> (compost, manure)</li>
+                        <li><strong>25% water</strong> and <strong>25% air</strong></li>
+                    </ul>
+                    <p>Test soil every 2 years for <span class="highlight">N-P-K</span> levels and pH balance.</p>
+                </div>
+                <div class="chart-container">
+                    <canvas id="soilChart"></canvas>
+                </div>
+                <p class="theory"><strong>Quick Fix:</strong> Add lime if pH < 6, sulfur if pH > 7.5.</p>
+            </div>
+
+            <!-- Planting Techniques -->
+            <div class="card">
+                <h2>Planting Techniques</h2>
+                <div class="theory">
+                    <p><strong>Seed Depth Rule:</strong> Plant at 2-3x the seed's diameter.</p>
+                    <ul class="tips-list">
+                        <li><strong>Direct seeding:</strong> Beans, corn (plant after last frost)</li>
+                        <li><strong>Transplanting:</strong> Tomatoes, peppers (start indoors)</li>
+                    </ul>
+                    <p><span class="highlight">Spacing matters:</span> Crowding reduces yield by 20-30%.</p>
+                </div>
+                <div class="chart-container">
+                    <canvas id="plantingChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Pest Management -->
+            <div class="card">
+                <h2>Pest Management</h2>
+                <div class="theory">
+                    <p><strong>Integrated Pest Management (IPM):</strong></p>
+                    <ul class="tips-list">
+                        <li><strong>Prevention:</strong> Resistant varieties, crop rotation</li>
+                        <li><strong>Monitoring:</strong> Scout weekly for pests</li>
+                        <li><strong>Control:</strong> Neem oil (organic), pyrethrins (last resort)</li>
+                    </ul>
+                    <p>Common pests: <span class="highlight">Aphids</span> (suck sap), <span class="highlight">Cutworms</span> (stem damage).</p>
+                </div>
+                <div class="chart-container">
+                    <canvas id="pestChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Harvesting Tips -->
+            <div class="card">
+                <h2>Harvesting Tips</h2>
+                <div class="theory">
+                    <p><strong>Harvest indicators:</strong></p>
+                    <ul class="tips-list">
+                        <li><strong>Leafy greens:</strong> Before flowering</li>
+                        <li><strong>Tomatoes:</strong> Firm, full color</li>
+                        <li><strong>Grains:</strong> When moisture < 20%</li>
+                    </ul>
+                    <p><span class="highlight">Morning harvest</span> retains more moisture. Use clean tools to prevent disease.</p>
+                </div>
+                <div class="chart-container">
+                    <canvas id="harvestChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Fertilizer Guide -->
+            <div class="card">
+                <h2>Fertilizer Guide</h2>
+                <div class="theory">
+                    <p><strong>N-P-K Basics:</strong></p>
+                    <ul class="tips-list">
+                        <li><strong>Nitrogen (N):</strong> Leaf growth (apply early)</li>
+                        <li><strong>Phosphorus (P):</strong> Root development</li>
+                        <li><strong>Potassium (K):</strong> Disease resistance</li>
+                    </ul>
+                    <p><span class="highlight">Organic options:</span> Compost (1-1-1), Bone meal (0-10-0).</p>
+                </div>
+                <div class="chart-container">
+                    <canvas id="fertilizerChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Crop Selection Chart
+        new Chart(document.getElementById('cropChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Wheat', 'Soybean', 'Corn', 'Rice'],
+                datasets: [{
+                    label: 'Yield (tons/ha)',
+                    data: [3.5, 2.8, 5.2, 4.1],
+                    backgroundColor: '#8BC34A'
+                }]
+            },
+            options: {
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+
+        // Soil Health Chart
+        new Chart(document.getElementById('soilChart'), {
+            type: 'radar',
+            data: {
+                labels: ['Nitrogen', 'Phosphorus', 'Potassium', 'pH', 'Organic Matter'],
+                datasets: [{
+                    label: 'Your Soil',
+                    data: [75, 40, 60, 62, 55],
+                    backgroundColor: 'rgba(76, 175, 80, 0.2)',
+                    borderColor: '#4CAF50'
+                }]
+            }
+        });
+
+        // Planting Chart
+        new Chart(document.getElementById('plantingChart'), {
+            type: 'line',
+            data: {
+                labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                datasets: [{
+                    label: 'Germination Rate (%)',
+                    data: [20, 60, 85, 95],
+                    borderColor: '#FF9800'
+                }]
+            }
+        });
+
+        // Pest Chart
+        new Chart(document.getElementById('pestChart'), {
+            type: 'pie',
+            data: {
+                labels: ['Aphids', 'Cutworms', 'Fungi', 'Other'],
+                datasets: [{
+                    data: [40, 25, 20, 15],
+                    backgroundColor: ['#FF5722', '#FFC107', '#795548', '#9E9E9E']
+                }]
+            }
+        });
+
+        // Harvest Chart
+        new Chart(document.getElementById('harvestChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Early', 'On-Time', 'Late'],
+                datasets: [{
+                    label: 'Yield Loss (%)',
+                    data: [5, 0, 15],
+                    backgroundColor: '#607D8B'
+                }]
+            }
+        });
+
+        // Fertilizer Chart
+        new Chart(document.getElementById('fertilizerChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['N', 'P', 'K'],
+                datasets: [{
+                    data: [10, 20, 10],
+                    backgroundColor: ['#4CAF50', '#2196F3', '#FFC107']
+                }]
+            }
+        });
+    </script>
+</body>
+</html>

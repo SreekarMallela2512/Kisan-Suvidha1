@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="scripts.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kisan Suvidha</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Custom Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+        }
+
+        .navbar {
+            background: linear-gradient(90deg, #000000, #09691e);
+           
+        }
+
+        .navbar-brand img {
+            border-radius: 50%;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, #a3e635, #28a745);
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .hero-section h1 {
+            font-size: 3rem;
+        }
+
+        .btn-custom {
+            background: linear-gradient(90deg, #ffc107, #ff8800);
+            color: white;
+            border: none;
+            transition: all 0.3s;
+        }
+
+        .btn-custom:hover {
+            background: linear-gradient(90deg, #ff8800, #ffc107);
+            color: white;
+        }
+
+        .service-card {
+            border: none;
+            background: linear-gradient(135deg, #ffffff, #e9ecef);
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-card:hover {
+            transform: scale(1.05);
+        }
+
+        .service-card h5 {
+            color: #28a745;
+        }
+
+        .contact-section {
+            background: linear-gradient(135deg, #218838, #28a745);
+            color: white;
+        }
+
+        .footer {
+            background-color: #333;
+            color: white;
+        }
+
+        .footer a {
+            color: #ffc107;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg shadow">
+        <div class="container">
+            <a class="navbar-brand fw-bold" style="color: white;" href="#">
+                <img src="images\KisanSuvidhalogo1-Photoroom.png" alt="Kisan Suvidha Logo" width="40" height="40" class="me-2">
+                Kisan Suvidha
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link text-white" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="#services">Services</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <h1>Welcome to Kisan Suvidha</h1>
+        <p>Your Gateway to Smarter Farming</p>
+        <a href="#services" class="btn btn-custom btn-lg mt-3">Explore Services</a>
+    </div>
+
+    <!-- About Section -->
+    <section id="about" class="container py-5 text-center">
+        <h2 class="fw-bold">About Us</h2>
+        <p class="mt-3">At Kisan Suvidha, we aim to empower farmers with cutting-edge tools, market updates, and expert advice. Join us in building a sustainable and productive farming community.</p>
+    </section>
+
+    <section id="services" class="py-5">
+        <div class="container text-center">
+            <h2 class="fw-bold">Our Services</h2>
+            <div class="row mt-4">
+                <!-- Crop Advisory -->
+                <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+                    <div class="card service-card shadow">
+                        <div class="card-body text-center">
+                            <i class="fa fa-seedling fa-3x mb-3" style="color: #28a745;"></i>
+                            <h5>Crop Advisory</h5>
+                            <p>Receive detailed insights and Learn Smart Farming with Expert's advice on crops for better yields.</p>
+                            <a href="cropadvisory.html" class="btn btn-primary mt-3">Learn More</a>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- Weather Updates -->
+                <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+                    <div class="card service-card shadow">
+                        <div class="card-body text-center">
+                            <i class="fa fa-cloud-sun-rain fa-3x mb-3" style="color: #ff8800;"></i>
+                            <h5>Weather Updates</h5>
+                            <p>Get Real-Time forecasts,AI-based predictions and Smart Farming tips to Optimize Farming</p>
+                            <a href="weatherupdates.html" class="btn btn-primary mt-3">Learn More</a>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- Market Prices -->
+                <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+                    <div class="card service-card shadow">
+                        <div class="card-body text-center">
+                            <i class="fa fa-hand-holding-usd fa-3x mb-3" style="color: #ffc107;"></i>
+                            <h5>Market Prices</h5>
+                            <p>Track Current Market Trends and Prices time-to-time to Maximize your Earnings.</p>
+                            <a href="cropsalestracking.html" class="btn btn-primary mt-3">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Financial Assistance -->
+                <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+                    <div class="card service-card shadow">
+                        <div class="card-body text-center">
+                            <i class="fa fa-wallet fa-3x mb-3" style="color: #007bff;"></i>
+                            <h5>Financial Assistance</h5>
+                            <p>Explore Loans,Subsidies,Government Schemes,Crop Insurance And Financial Literacy</p>
+                            <a href="finassitance.html" class="btn btn-primary mt-3">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section py-5">
+        <div class="container text-center">
+            <h2>Contact Us</h2>
+            <form class="mt-4">
+                <div class="mb-3">
+                    <input type="text" class="form-control" placeholder="Your Name" required>
+                </div>
+                <div class="mb-3">
+                    <input type="email" class="form-control" placeholder="Your Email" required>
+                </div>
+                <div class="mb-3">
+                    <textarea class="form-control" rows="4" placeholder="Your Message"></textarea>
+                </div>
+                <button type="submit" class="btn btn-light">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-3 text-center">
+        <p>&copy; 2025 <a href="#">Kisan Suvidha</a>. All rights reserved.</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

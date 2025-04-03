@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Crop Sales Tracker</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #8BC34A;
+            --secondary: #4CAF50;
+            --dark: #2E7D32;
+            --highlight: #FFC107;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f9f9f9;
+            margin: 0;
+            line-height: 1.6;
+        }
+        header {
+            background: linear-gradient(135deg, var(--dark), var(--secondary));
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .card h2 {
+            color: var(--dark);
+            margin-top: 0;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 0.5rem;
+        }
+        .chart-container {
+            height: 250px;
+            margin: 1.5rem 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        th, td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: 500;
+        }
+        .highlight {
+            background-color: #FFF9C4;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+        }
+        .badge {
+            display: inline-block;
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        .up { background: #E8F5E9; color: #2E7D32; }
+        .down { background: #FFEBEE; color: #C62828; }
+        .search-bar {
+            margin: 1rem 0;
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>📊 Indian Crop Sales Tracker</h1>
+        <p>Real-time market prices & sales analytics</p>
+    </header>
+
+    <div class="container">
+        <input type="text" class="search-bar" placeholder="Search crop (e.g. Wheat, Rice, Onion...)">
+
+        <div class="dashboard">
+            <!-- Price Trends -->
+            <div class="card">
+                <h2>🔍 Current Market Prices (₹/quintal)</h2>
+                <table>
+                    <tr>
+                        <th>Crop</th>
+                        <th>Mandi</th>
+                        <th>Price</th>
+                        <th>Trend</th>
+                    </tr>
+                    <tr>
+                        <td>Wheat</td>
+                        <td>Delhi</td>
+                        <td>₹2,150</td>
+                        <td><span class="badge up">↑ 2%</span></td>
+                    </tr>
+                    <tr>
+                        <td>Rice (Basmati)</td>
+                        <td>Punjab</td>
+                        <td>₹3,400</td>
+                        <td><span class="badge down">↓ 1.5%</span></td>
+                    </tr>
+                    <tr>
+                        <td>Tomato</td>
+                        <td>Bangalore</td>
+                        <td>₹800</td>
+                        <td><span class="badge up">↑ 12%</span></td>
+                    </tr>
+                    <tr>
+                        <td>Cotton</td>
+                        <td>Gujarat</td>
+                        <td>₹6,200</td>
+                        <td><span class="badge up">↑ 3.2%</span></td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- Price History Graph -->
+            <div class="card">
+                <h2>📈 Price Trends (Last 6 Months)</h2>
+                <div class="chart-container">
+                    <canvas id="priceChart"></canvas>
+                </div>
+                <p><span class="highlight">Peak season:</span> Feb-Apr for Wheat | Sep-Nov for Rice</p>
+            </div>
+
+            <!-- Sales Volume -->
+            <div class="card">
+                <h2>📦 Monthly Sales Volume</h2>
+                <div class="chart-container">
+                    <canvas id="volumeChart"></canvas>
+                </div>
+                <p><span class="highlight">Top selling:</span> Rice (32%) > Wheat (28%) > Pulses (18%)</p>
+            </div>
+
+            <!-- Mandi Comparison -->
+            <div class="card">
+                <h2>🏙️ Mandi Price Comparison</h2>
+                <div class="chart-container">
+                    <canvas id="mandiChart"></canvas>
+                </div>
+                <p><span class="highlight">Best rates:</span> Delhi for Wheat | Mumbai for Pulses</p>
+            </div>
+
+            <!-- Crop Calendar -->
+            <div class="card">
+                <h2>📅 Harvest Calendar</h2>
+                <table>
+                    <tr>
+                        <th>Crop</th>
+                        <th>Harvest Months</th>
+                        <th>Avg. Yield</th>
+                    </tr>
+                    <tr>
+                        <td>Wheat</td>
+                        <td>Mar-Apr</td>
+                        <td>3.5 tons/ha</td>
+                    </tr>
+                    <tr>
+                        <td>Rice</td>
+                        <td>Sep-Oct</td>
+                        <td>2.8 tons/ha</td>
+                    </tr>
+                    <tr>
+                        <td>Sugarcane</td>
+                        <td>Dec-Mar</td>
+                        <td>70 tons/ha</td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- Profit Calculator -->
+            <div class="card">
+                <h2>🧮 Profit Estimator</h2>
+                <p><strong>Input your expected yield:</strong></p>
+                <table>
+                    <tr>
+                        <td>Crop:</td>
+                        <td>
+                            <select style="padding: 0.3rem; width: 100%">
+                                <option>Wheat</option>
+                                <option>Rice</option>
+                                <option>Cotton</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Area (acres):</td>
+                        <td><input type="number" value="2" style="padding: 0.3rem; width: 100%"></td>
+                    </tr>
+                    <tr>
+                        <td>Current price:</td>
+                        <td>₹2,150/quintal</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Est. Profit:</strong></td>
+                        <td><span class="highlight">₹86,000</span></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Price Trend Chart
+        new Chart(document.getElementById('priceChart'), {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [
+                    {
+                        label: 'Wheat (₹/q)',
+                        data: [1950, 2050, 2250, 2100, 2000, 2150],
+                        borderColor: '#4CAF50',
+                        tension: 0.3
+                    },
+                    {
+                        label: 'Rice (₹/q)',
+                        data: [3200, 3100, 3000, 2900, 3100, 3400],
+                        borderColor: '#FF9800',
+                        tension: 0.3
+                    }
+                ]
+            }
+        });
+
+        // Volume Chart
+        new Chart(document.getElementById('volumeChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Wheat', 'Rice', 'Pulses', 'Vegetables'],
+                datasets: [{
+                    label: 'Sales (tons)',
+                    data: [280, 320, 180, 220],
+                    backgroundColor: ['#4CAF50', '#FFC107', '#8BC34A', '#FF9800']
+                }]
+            }
+        });
+
+        // Mandi Comparison
+        new Chart(document.getElementById('mandiChart'), {
+            type: 'radar',
+            data: {
+                labels: ['Delhi', 'Mumbai', 'Bangalore', 'Punjab', 'Gujarat'],
+                datasets: [{
+                    label: 'Wheat Prices (₹)',
+                    data: [2150, 2050, 2250, 1950, 2000],
+                    backgroundColor: 'rgba(76, 175, 80, 0.2)'
+                }]
+            }
+        });
+    </script>
+</body>
+</html>
