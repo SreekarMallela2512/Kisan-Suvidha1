@@ -156,4 +156,14 @@ services.forEach(service => {
         });
     });
 });
+const express = require('express');
+const app = express();
+const PORT = 5000; // You can use any port number
 
+app.get('/', (req, res) => {
+    res.send('Hello, world!');
+});
+
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server is running on port ${PORT}`);
+});
